@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customers</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+  </head>
+  <body>
+    <h2>Customers</h2>
+    <ul id="customers-list">
+      {% for customer in customers %}
+      <li>
+        <a href="/customer/{{ customer.id }}/interactions"
+          >{{ customer.name }}</a
+        >
+      </li>
+      {% endfor %}
+    </ul>
+    <a href="/">Back to Home</a>
+  </body>
+</html>

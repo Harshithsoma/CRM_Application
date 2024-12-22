@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Edit Interaction</title>
+  </head>
+  <body>
+    <h1>Edit Interaction</h1>
+    <form action="{{ url_for('edit_interaction', interaction_id=interaction.id) }}" method="POST">
+        <label for="type">Type</label>
+        <input type="text" id="type" name="type" class="form-control" value="{{ interaction.type }}" required>
+    
+        <label for="category">Category</label>
+        <select id="category" name="category" class="form-control">
+            <option value="Email" {% if interaction.category == 'Email' %}selected{% endif %}>Email</option>
+            <option value="Call" {% if interaction.category == 'Call' %}selected{% endif %}>Call</option>
+            <option value="Meeting" {% if interaction.category == 'Meeting' %}selected{% endif %}>Meeting</option>
+            <option value="Follow-Up" {% if interaction.category == 'Follow-Up' %}selected{% endif %}>Follow-Up</option>
+            <option value="General" {% if interaction.category == 'General' %}selected{% endif %}>General</option>
+        </select>
+    
+        <label for="notes">Notes</label>
+        <textarea id="notes" name="notes" class="form-control">{{ interaction.notes }}</textarea>
+    
+        <button type="submit" class="btn btn-primary mt-3">Update Interaction</button>
+    </form>
+    
+    <a href="{{ url_for('view_customer', id=interaction.customer.id) }}"
+      >Back to Customer</a
+    >
+  </body>
+</html>

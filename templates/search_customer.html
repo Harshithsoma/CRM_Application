@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Search Customers</title>
+    <style>
+      /* General Styles */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+      }
+
+      h1,
+      h2 {
+        color: #333;
+      }
+
+      form {
+        margin-bottom: 20px;
+      }
+
+      input[type="text"] {
+        padding: 8px;
+        font-size: 16px;
+        width: 300px;
+        margin-right: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+
+      button {
+        padding: 8px 12px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: none;
+        background-color: #3498db;
+        color: white;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #2980b9;
+      }
+
+      /* Customer List */
+      .customer-list {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      .customer-list li {
+        background-color: #fff;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .customer-list li:hover {
+        background-color: #ecf0f1;
+      }
+
+      .customer-info {
+        font-size: 16px;
+        color: #333;
+      }
+
+      .view-btn {
+        padding: 8px 15px;
+        font-size: 16px;
+        background-color: #2ecc71;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
+
+      .view-btn:hover {
+        background-color: #27ae60;
+      }
+
+      /* No Results Message */
+      .no-results {
+        font-size: 18px;
+        color: #e74c3c;
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      /* Back to Dashboard Button */
+      .back-btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #3498db;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        display: inline-block;
+        margin-top: 20px;
+      }
+
+      .back-btn:hover {
+        background-color: #2980b9;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Search Customers</h1>
+
+    <form method="POST">
+      <input type="text" name="query" placeholder="Search by Name" required />
+      <button type="submit">Search</button>
+    </form>
+
+    <h2>Search Results:</h2>
+
+    {% if customers|length == 0 %}
+    <p class="no-results">No matches found</p>
+    {% else %}
+    <ul class="customer-list">
+      {% for customer in customers %}
+      <li>
+        <span class="customer-info"
+          >{{ customer.name }} - {{ customer.email }} - {{ customer.phone
+          }}</span
+        >
+        <a
+          href="{{ url_for('view_customer', id=customer.id) }}"
+          class="view-btn"
+          >View</a
+        >
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    <!-- Back to Dashboard Button -->
+    <a href="{{ url_for('dashboard') }}" class="back-btn">Back to Dashboard</a>
+  </body>
+</html>

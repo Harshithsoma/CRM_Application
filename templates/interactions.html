@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactions</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+  </head>
+  <body>
+    <h2>Interactions for {{ customer.name }}</h2>
+    <ul>
+      {% for interaction in interactions %}
+      <li>
+        {{ interaction.type }}: {{ interaction.details }} ({{
+        interaction.outcome }})
+      </li>
+      {% endfor %}
+    </ul>
+    <a href="/">Back to Home</a>
+  </body>
+</html>

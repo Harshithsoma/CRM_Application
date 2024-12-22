@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customer Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f7fa;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        width: 80%;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+      }
+
+      h1 {
+        text-align: center;
+        color: #2c3e50;
+        margin-bottom: 20px;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        background-color: #3498db;
+        color: white;
+        border-radius: 8px 8px 0 0;
+      }
+
+      .header h1 {
+        margin: 0;
+        font-size: 24px;
+      }
+
+      .logout-btn {
+        text-decoration: none;
+        color: white;
+        background-color: #e74c3c;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+      }
+
+      .logout-btn:hover {
+        background-color: #c0392b;
+      }
+
+      .summary {
+        text-align: center;
+        font-size: 18px;
+        color: #34495e;
+        margin-bottom: 30px;
+      }
+
+      .summary p {
+        margin: 5px 0;
+      }
+
+      .customer-list {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      .customer-list li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #ecf0f1;
+        margin: 10px 0;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .customer-list li:hover {
+        background-color: #e1e8eb;
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 10px;
+      }
+
+      .action-buttons a,
+      .action-buttons button {
+        padding: 10px 15px;
+        font-size: 14px;
+        text-align: center;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        display: inline-block;
+        width: 100px;
+        text-align: center;
+        height: 35px;
+      }
+
+      .action-buttons a {
+        background-color: #3498db;
+        color: white;
+        text-decoration: none;
+      }
+
+      .action-buttons a:hover {
+        background-color: #2980b9;
+      }
+
+      .action-buttons button {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+      }
+
+      .action-buttons button:hover {
+        background-color: #c0392b;
+      }
+
+      form {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+
+      form input[type="text"] {
+        padding: 8px;
+        width: 75%;
+        font-size: 16px;
+        border: 1px solid #bdc3c7;
+        border-radius: 5px;
+      }
+
+      form button {
+        padding: 10px 20px;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      form button:hover {
+        background-color: #2980b9;
+      }
+
+      .add-customer-btn {
+        display: block;
+        text-align: center;
+        margin: 20px 0;
+      }
+
+      .add-customer-btn a {
+        text-decoration: none;
+        color: #fff;
+        background-color: #2ecc71;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
+
+      .add-customer-btn a:hover {
+        background-color: #27ae60;
+      }
+
+      .customers-title {
+        margin-top: 30px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #34495e;
+      }
+
+      .interactions-title {
+        margin-top: 30px;
+        font-size: 20px;
+        font-weight: bold;
+        color: #34495e;
+      }
+
+      .interactions-list {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      .interactions-list li {
+        background-color: #f9f9f9;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .interactions-list li:hover {
+        background-color: #ecf0f1;
+      }
+
+      .interactions-list .delete-btn {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        padding: 5px 5px;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        float: right;
+      }
+
+      .interactions-list .delete-btn:hover {
+        background-color: #c0392b;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header with Logout -->
+      <div class="header">
+        <h1>Customer Dashboard</h1>
+        <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+      </div>
+
+      <!-- Add Customer Button -->
+      <div class="add-customer-btn">
+        <a href="{{ url_for('add_customer') }}">Add New Customer</a>
+      </div>
+
+      <!-- Search Form -->
+      <form action="{{ url_for('search_customer') }}" method="POST">
+        <input
+          type="text"
+          name="query"
+          placeholder="Search Customer by Name"
+          required
+        />
+        <button type="submit">Search</button>
+      </form>
+
+      <!-- Summary of Total Customers and Interactions -->
+      <div class="summary">
+        <p>Total Customers: {{ total_customers }}</p>
+        <p>Total Interactions: {{ total_interactions }}</p>
+      </div>
+
+      <!-- Customers Section -->
+      <div class="customers-title">Customers</div>
+      <ul class="customer-list">
+        {% for customer in customers %}
+        <li>
+          <span>{{ customer.name }}</span>
+          <div class="action-buttons">
+            <a href="{{ url_for('view_customer', id=customer.id) }}">View</a>
+            <a href="{{ url_for('edit_customer', id=customer.id) }}">Edit</a>
+            <form
+              action="{{ url_for('delete_customer', id=customer.id) }}"
+              method="POST"
+              style="display: inline"
+            >
+              <button
+                type="submit"
+                onclick="return confirm('Are you sure you want to delete this customer?');"
+              >
+                Delete
+              </button>
+            </form>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+
+      <!-- Interactions Section -->
+      <div class="interactions-title">Customer Interactions</div>
+      <ul class="interactions-list">
+        {% for customer in customers %} {% for interaction in
+        customer.interactions %}
+        <li>
+          <strong>{{ interaction.type }}:</strong> {{ interaction.notes }}
+          <form
+            action="{{ url_for('delete_interaction', interaction_id=interaction.id) }}"
+            method="POST"
+            style="display: inline"
+          >
+            <button type="submit" class="delete-btn">Delete</button>
+          </form>
+        </li>
+        {% endfor %} {% endfor %}
+      </ul>
+    </div>
+  </body>
+</html>

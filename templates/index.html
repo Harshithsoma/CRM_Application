@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Customer Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
+    <h1>Customer Dashboard</h1>
+
+    <!-- Button to Add a New Customer -->
+    <a href="{{ url_for('add_customer') }}">
+      <button>Add New Customer</button>
+    </a>
+
+    <!-- Display List of Customers -->
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for customer in customers %}
+        <tr>
+          <td>{{ customer.name }}</td>
+          <td>{{ customer.email }}</td>
+          <td>{{ customer.phone }}</td>
+          <td>
+            <!-- Button to View Customer -->
+            <a href="{{ url_for('view_customer', id=customer.id) }}">
+              <button>View</button>
+            </a>
+            <!-- Button to Edit Customer -->
+            <a href="{{ url_for('edit_customer', id=customer.id) }}">
+              <button>Edit</button>
+            </a>
+            <!-- Button to Delete Customer -->
+            <form
+              action="{{ url_for('delete_customer', id=customer.id) }}"
+              method="POST"
+              style="display: inline"
+            >
+              <button type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>
